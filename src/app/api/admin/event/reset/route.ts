@@ -5,6 +5,8 @@ import { writeFile } from 'fs/promises'
 import { join } from 'path'
 import { gzipSync } from 'zlib'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const session = await auth()

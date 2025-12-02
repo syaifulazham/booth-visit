@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
 import { eventSchema } from '@/lib/validators'
 
+export const dynamic = 'force-dynamic'
+
 // GET - Get current event (there should only be one)
 export async function GET(request: NextRequest) {
   try {

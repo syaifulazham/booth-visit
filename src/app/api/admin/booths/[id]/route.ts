@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
 import { boothSchema } from '@/lib/validators'
 
+export const dynamic = 'force-dynamic'
+
 // GET - Get single booth
 export async function GET(
   request: NextRequest,

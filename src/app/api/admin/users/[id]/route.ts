@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
 import bcrypt from 'bcryptjs'
 
+export const dynamic = 'force-dynamic'
+
 // PUT - Update user
 export async function PUT(
   request: NextRequest,

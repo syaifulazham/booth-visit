@@ -4,6 +4,8 @@ import { auth } from '@/lib/auth'
 import { boothSchema } from '@/lib/validators'
 import { generateHashcode } from '@/lib/utils'
 
+export const dynamic = 'force-dynamic'
+
 // GET - List all booths
 export async function GET(request: NextRequest) {
   try {

@@ -3,6 +3,8 @@ import { auth } from '@/lib/auth'
 import { readdir, stat } from 'fs/promises'
 import { join } from 'path'
 
+export const dynamic = 'force-dynamic'
+
 // GET - List all backup files
 export async function GET(request: NextRequest) {
   try {

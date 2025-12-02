@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
 
-// GET - Get current user session
+export const dynamic = 'force-dynamic'
+
+// GET - Get current logged-in user session
 export async function GET(request: NextRequest) {
   try {
     const session = await auth()

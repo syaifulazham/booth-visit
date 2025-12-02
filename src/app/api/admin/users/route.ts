@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
 import bcrypt from 'bcryptjs'
 
+export const dynamic = 'force-dynamic'
+
 // GET - List all users
 export async function GET(request: NextRequest) {
   try {
