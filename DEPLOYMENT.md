@@ -56,6 +56,8 @@ Add your environment variables:
 DATABASE_URL="mysql://user:password@localhost:3306/booth-visit-db"
 NEXTAUTH_URL="https://stemai.techlympics.my"
 NEXTAUTH_SECRET="your-secret-key-here"
+AUTH_TRUST_HOST="true"
+NODE_ENV="production"
 ```
 
 ## Step 4: Setup Database

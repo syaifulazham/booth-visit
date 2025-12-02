@@ -61,6 +61,7 @@ DATABASE_URL="mysql://booth_user:your_secure_password_here@localhost:3306/booth-
 # NextAuth Configuration
 NEXTAUTH_URL="https://stemai.techlympics.my"
 NEXTAUTH_SECRET="generate-a-long-random-string-here"
+AUTH_TRUST_HOST="true"
 
 # Environment
 NODE_ENV="production"
