@@ -169,21 +169,12 @@ export default function Home() {
       <div className="max-w-6xl mx-auto space-y-4 sm:space-y-8">
         {/* Header */}
         <div className="text-center space-y-4 sm:space-y-6">
-          {/* Logos */}
-          <div className="flex items-center justify-center gap-4 sm:gap-6">
+          {/* Logo */}
+          <div className="flex items-center justify-center">
             <div className="relative w-24 h-16 sm:w-36 sm:h-24">
               <Image
                 src="/images/logo/madani.png"
                 alt="Madani Logo"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-            <div className="relative w-32 h-32 sm:w-44 sm:h-44">
-              <Image
-                src="/images/logo/mosti.png"
-                alt="MOSTI Logo"
                 fill
                 className="object-contain"
                 priority
@@ -449,19 +440,11 @@ export default function Home() {
                   {/* Certificate Header */}
                   <div className="text-center space-y-4">
                     {/* Logo Area */}
-                    <div className="flex items-center justify-center gap-4 mb-6">
+                    <div className="flex items-center justify-center mb-6">
                       <div className="relative w-16 h-12 sm:w-20 sm:h-16">
                         <Image
                           src="/images/logo/madani.png"
                           alt="Madani Logo"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <div className="relative w-16 h-16 sm:w-20 sm:h-20">
-                        <Image
-                          src="/images/logo/mosti.png"
-                          alt="MOSTI Logo"
                           fill
                           className="object-contain"
                         />
@@ -476,6 +459,18 @@ export default function Home() {
                       <h3 className="text-xl sm:text-2xl font-semibold text-gray-700">
                         CERTIFICATE OF ACHIEVEMENT
                       </h3>
+                    </div>
+
+                    {/* Event Name */}
+                    <div className={`mt-4 ${roboto.className}`}>
+                      <p className="text-lg sm:text-xl font-bold text-gray-800">
+                        {eventName}
+                      </p>
+                      {eventSlogan && (
+                        <p className="text-sm sm:text-base text-blue-600 italic mt-1">
+                          {eventSlogan}
+                        </p>
+                      )}
                     </div>
 
                     {/* Divider */}
@@ -512,18 +507,6 @@ export default function Home() {
                       <p className="text-xs sm:text-sm text-gray-600 mt-1">
                         For visiting <span className="font-bold">{selectedCert.percentage}%</span> of available booths
                       </p>
-                    </div>
-
-                    {/* Event Info */}
-                    <div className="mt-6 space-y-1">
-                      <p className="text-sm sm:text-base font-semibold text-gray-700">
-                        {eventName}
-                      </p>
-                      {eventSlogan && (
-                        <p className="text-xs sm:text-sm text-gray-600 italic">
-                          {eventSlogan}
-                        </p>
-                      )}
                     </div>
 
                     {/* Date */}
