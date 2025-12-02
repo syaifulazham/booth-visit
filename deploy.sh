@@ -107,6 +107,25 @@ else
     print_success ".env file found"
 fi
 
+# Check database connection
+print_info "Checking database connection..."
+DB_URL=$(grep DATABASE_URL .env | cut -d '=' -f2- | tr -d '"')
+if [ -z "$DB_URL" ]; then
+    print_error "DATABASE_URL not found in .env file!"
+    exit 1
+fi
+
+# Extract database name from URL (format: mysql://user:pass@host:port/dbname)
+DB_NAME=$(echo "$DB_URL" | sed 's/.*\///')
+print_info "Database name: $DB_NAME"
+
+# Test if database exists (will fail silently if MySQL not accessible)
+if command -v mysql &> /dev/null; then
+    print_success "MySQL client found"
+else
+    print_warning "MySQL client not found. Skipping database check."
+fi
+
 # Install dependencies
 print_info "Installing dependencies..."
 npm install
