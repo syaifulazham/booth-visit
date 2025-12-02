@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // Hashed with bcrypt
+  name      String
+  role      String   @default("admin") // admin, super_admin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  name        String
+  slogan      String?  // Event slogan
+  venue       String
+  dateStart   DateTime
+  dateEnd     DateTime
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Booth {
+  id               String   @id @default(cuid())
+  boothNumber      String?  @unique // Booth Number (Optional but unique if provided)
+  boothName        String
+  ministry         String
+  agency           String
+  abbreviationName String
+  picName          String?  // Person In Charge (Optional)
+  picPhone         String?  // Optional
+  picEmail         String?  // Optional
+  hashcode         String   @unique // For QR code URL
+  qrCodeGenerated  Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  visits           Visit[]
+}
+
+model Visitor {
+  id          String   @id @default(cuid())
+  name        String
+  phone       String   @unique // Phone number for identification
+  email       String?  // Optional email
+  state       String   // Negeri / State
+  gender      String   // Lelaki, Perempuan
+  age         Int
+  visitorType String   // Awam, Kakitangan Kerajaan, etc.
+  sektor      String   // pertanian, penternakan, etc.
+  cookieId    String   @unique // For cookie identification
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  visits      Visit[]
+}
+
+model Visit {
+  id        String   @id @default(cuid())
+  visitorId String
+  boothId   String
+  ipAddress String?
+  userAgent String?
+  rating    Int?     // Rating 1-5 stars (optional)
+  comment   String?  @db.Text // Visitor comment (optional)
+  visitedAt DateTime @default(now())
+
+  visitor Visitor @relation(fields: [visitorId], references: [id], onDelete: Cascade)
+  booth   Booth   @relation(fields: [boothId], references: [id], onDelete: Cascade)
+
+  @@unique([visitorId, boothId]) // A visitor can only visit a booth once
+  @@index([boothId])
+  @@index([visitorId])
+  @@index([visitedAt])
+}
