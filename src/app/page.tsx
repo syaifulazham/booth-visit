@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { QRScanner } from '@/components/visitor/QRScanner'
-import { QrCode, UserPlus, Award, X } from 'lucide-react'
+import { QrCode, UserPlus, Award, X, HelpCircle } from 'lucide-react'
 import { Roboto } from 'next/font/google'
 
 const roboto = Roboto({
@@ -230,14 +230,21 @@ export default function Home() {
         {visitor && (
           <Card className="bg-white shadow-lg">
             <CardContent className="pt-6 pb-6">
-              <div className="text-center">
+              <div className="flex flex-row items-center justify-center gap-3">
                 <button
                   onClick={() => setShowScanner(true)}
-                  className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors text-sm sm:text-base shadow-md hover:shadow-lg w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors text-sm sm:text-base shadow-md hover:shadow-lg flex-1 sm:flex-initial"
                 >
                   <QrCode className="h-5 w-5" />
                   <span>Imbas QR Kod Gerai / Scan Booth QR</span>
                 </button>
+                <Link
+                  href="/guide"
+                  className="inline-flex items-center justify-center p-3 sm:p-4 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors shadow-md hover:shadow-lg flex-shrink-0"
+                  title="Panduan Penggunaan / User Guide"
+                >
+                  <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6" />
+                </Link>
               </div>
             </CardContent>
           </Card>
