@@ -230,7 +230,7 @@ export default function Home() {
         {visitor && (
           <Card className="bg-white shadow-lg">
             <CardContent className="pt-6 pb-6">
-              <div className="flex flex-row items-center justify-center gap-3">
+              <div className="flex flex-row items-stretch justify-center gap-3">
                 <button
                   onClick={() => setShowScanner(true)}
                   className="inline-flex items-center justify-center gap-2 px-4 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors text-sm sm:text-base shadow-md hover:shadow-lg flex-1 sm:flex-initial"
@@ -240,10 +240,11 @@ export default function Home() {
                 </button>
                 <Link
                   href="/guide"
-                  className="inline-flex items-center justify-center p-3 sm:p-4 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors shadow-md hover:shadow-lg flex-shrink-0"
+                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors shadow-md hover:shadow-lg text-sm sm:text-base"
                   title="Panduan Penggunaan / User Guide"
                 >
-                  <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6" />
+                  <HelpCircle className="h-5 w-5" />
+                  <span>Panduan / Guide</span>
                 </Link>
               </div>
             </CardContent>
@@ -438,13 +439,21 @@ export default function Home() {
 
         {/* Action Button - For New Visitors Only */}
         {!visitor && (
-          <div className="flex justify-center px-2 sm:px-0">
+          <div className="flex flex-row items-stretch justify-center gap-3 px-2 sm:px-0">
             <Link
               href="/register"
-              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-4 sm:py-5 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors text-base sm:text-lg shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-4 sm:py-5 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors text-base sm:text-lg shadow-lg hover:shadow-xl flex-1 sm:flex-initial"
             >
               <UserPlus className="h-5 w-5 sm:h-6 sm:w-6" />
               <span>Pelawat Baru / New Visitor</span>
+            </Link>
+            <Link
+              href="/guide"
+              className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-4 sm:py-5 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl text-base sm:text-lg"
+              title="Panduan Penggunaan / User Guide"
+            >
+              <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6" />
+              <span>Panduan / Guide</span>
             </Link>
           </div>
         )}
