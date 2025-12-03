@@ -165,7 +165,32 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-6 sm:py-12 px-3 sm:px-4">
+    <>
+      {/* Print Styles */}
+      <style jsx global>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #certificate-print-area,
+          #certificate-print-area * {
+            visibility: visible;
+          }
+          #certificate-print-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+          }
+          .print-hide {
+            display: none !important;
+          }
+          @page {
+            margin: 1cm;
+          }
+        }
+      `}</style>
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-6 sm:py-12 px-3 sm:px-4">
       <div className="max-w-6xl mx-auto space-y-4 sm:space-y-8">
         {/* Header */}
         <div className="text-center space-y-4 sm:space-y-6">
@@ -425,7 +450,7 @@ export default function Home() {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
             <div className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
               {/* Close Button */}
-              <div className="flex justify-end p-4">
+              <div className="flex justify-end p-4 print-hide">
                 <button
                   onClick={() => setShowCertModal(false)}
                   className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -435,7 +460,7 @@ export default function Home() {
               </div>
 
               {/* Certificate Content */}
-              <div className={`bg-gradient-to-br ${selectedCert.color} p-8 sm:p-12 mx-4 sm:mx-8 mb-8 rounded-lg border-8 border-double border-white shadow-xl`}>
+              <div id="certificate-print-area" className={`bg-gradient-to-br ${selectedCert.color} p-8 sm:p-12 mx-4 sm:mx-8 mb-8 rounded-lg border-8 border-double border-white shadow-xl`}>
                 <div className="bg-white bg-opacity-95 p-6 sm:p-8 rounded-lg">
                   {/* Certificate Header */}
                   <div className="text-center space-y-4">
@@ -524,7 +549,7 @@ export default function Home() {
               </div>
 
               {/* Download Button */}
-              <div className="px-8 pb-8">
+              <div className="px-8 pb-8 print-hide">
                 <button
                   onClick={() => window.print()}
                   className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
@@ -542,5 +567,6 @@ export default function Home() {
         </div>
       </div>
     </main>
+    </>
   )
 }
