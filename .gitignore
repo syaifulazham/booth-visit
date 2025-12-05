@@ -47,5 +47,8 @@ next-env.d.ts
 # public uploads
 /public/uploads/
 
-# data backups
-/backups/
+# data backups (exclude DEMO backup from gitignore)
+/backups/*
+!/backups/DEMO-backup-sample-booths.json.gz
+!/backups/README.md
+!/backups/.gitkeep

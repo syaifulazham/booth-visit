@@ -46,6 +46,27 @@ npm run dev
 
 Visit http://localhost:3000
 
+## 🎯 Quick Demo Setup
+
+**NEW:** This repository includes a **pre-installed demo backup** with 15 Malaysian STEM/AI themed booths!
+
+### Restore Demo Booths (2 Minutes):
+1. Complete installation steps above
+2. Login to admin panel: http://localhost:3000/login
+3. Go to: **Admin → Event Settings** (`/admin/event`)
+4. Scroll to **"Restore from Backup"** section
+5. Select: `DEMO-backup-sample-booths.json.gz`
+6. Click **"Restore"** and confirm
+7. Done! 15 demo booths are now loaded ✅
+
+**What's included:**
+- 15 professional booths (AI Agriculture, Robotics, Smart Cities, Quantum Computing, etc.)
+- Complete booth information (ministry, agency, contact person)
+- Unique QR codes for each booth
+- Perfect for demos, testing, and presentations
+
+📖 **Full demo guide:** See `INSTALLATION_DEMO.md`
+
 ## 📁 Project Structure
 
 ```
@@ -177,6 +198,6 @@ Access from: Booth Management → QR Code → PDF Button
 
 ---
 
-**Version:** 0.2.0  
-**Last Updated:** December 2, 2025  
-**Status:** Export & Edit Features Complete ✅
+**Version:** 0.3.0  
+**Last Updated:** December 5, 2025  
+**Status:** Registration Simplified + Demo Backup Included ✅
