@@ -21,8 +21,12 @@ export const boothSchema = z.object({
 // Visitor Registration Schema
 export const visitorSchema = z.object({
   name: z.string().min(2, 'Nama penuh diperlukan / Full name is required'),
-  phone: z.string().min(10, 'No. telefon tidak sah / Invalid phone number').max(15, 'No. telefon terlalu panjang / Phone number too long'),
-  email: z.string().email('Email tidak sah / Invalid email').optional().or(z.literal('')),
+  email: z.string().email('Email tidak sah / Invalid email'),
+  gender: z.enum(['Lelaki', 'Perempuan'], {
+    errorMap: () => ({ message: 'Sila pilih jantina / Please select gender' }),
+  }),
+  // Optional fields
+  phone: z.string().min(10, 'No. telefon tidak sah / Invalid phone number').max(15, 'No. telefon terlalu panjang / Phone number too long').optional().or(z.literal('')),
   state: z.enum([
     'JOHOR',
     'KEDAH',
@@ -42,14 +46,12 @@ export const visitorSchema = z.object({
     'WP PUTRAJAYA',
   ], {
     errorMap: () => ({ message: 'Sila pilih negeri / Please select state' }),
-  }),
-  gender: z.enum(['Lelaki', 'Perempuan'], {
-    errorMap: () => ({ message: 'Sila pilih jantina / Please select gender' }),
-  }),
+  }).optional().or(z.literal('')),
   age: z.number()
     .int('Umur mesti nombor bulat / Age must be a whole number')
     .min(1, 'Umur tidak sah / Invalid age')
-    .max(120, 'Umur tidak sah / Invalid age'),
+    .max(120, 'Umur tidak sah / Invalid age')
+    .optional(),
   visitorType: z.enum([
     'Awam',
     'Kakitangan Kerajaan',
@@ -59,7 +61,7 @@ export const visitorSchema = z.object({
     'Lain-lain',
   ], {
     errorMap: () => ({ message: 'Sila pilih jenis pelawat / Please select visitor type' }),
-  }),
+  }).optional().or(z.literal('')),
   sektor: z.enum([
     'Pertanian',
     'Penternakan',
@@ -71,7 +73,7 @@ export const visitorSchema = z.object({
     'Lain-lain',
   ], {
     errorMap: () => ({ message: 'Sila pilih sektor / Please select sector' }),
-  }),
+  }).optional().or(z.literal('')),
 })
 
 // Visit Log Schema

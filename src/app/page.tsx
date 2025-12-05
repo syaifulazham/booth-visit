@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { QRScanner } from '@/components/visitor/QRScanner'
-import { QrCode, UserPlus, Award, X, HelpCircle } from 'lucide-react'
+import { QrCode, UserPlus, Award, X, HelpCircle, Edit } from 'lucide-react'
 import { Roboto } from 'next/font/google'
 
 const roboto = Roboto({
@@ -335,23 +335,40 @@ export default function Home() {
         {visitor && (
           <Card className="bg-white shadow-lg">
             <CardHeader className="pb-3">
-              <CardTitle className="text-lg sm:text-xl md:text-2xl leading-tight">
-                Selamat Datang / Welcome
-                <br />
-                <span className="text-blue-600">{visitor.name}! 👋</span>
-              </CardTitle>
+              <div className="flex items-start justify-between gap-3">
+                <CardTitle className="text-lg sm:text-xl md:text-2xl leading-tight">
+                  Selamat Datang / Welcome
+                  <br />
+                  <span className="text-blue-600">{visitor.name}! 👋</span>
+                </CardTitle>
+                <Link
+                  href="/edit"
+                  className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+                  title="Edit Profil / Edit Profile"
+                >
+                  <Edit className="w-4 h-4" />
+                  <span className="hidden sm:inline">Edit</span>
+                </Link>
+              </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Contact Info */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-                <span className="flex items-center gap-1">
-                  <span className="text-base">📱</span>
-                  <span className="break-all">{visitor.phone}</span>
-                </span>
+                {visitor.phone && (
+                  <span className="flex items-center gap-1">
+                    <span className="text-base">📱</span>
+                    <span className="break-all">{visitor.phone}</span>
+                  </span>
+                )}
                 {visitor.email && (
                   <span className="flex items-center gap-1">
                     <span className="text-base">📧</span>
                     <span className="break-all">{visitor.email}</span>
+                  </span>
+                )}
+                {!visitor.phone && !visitor.email && (
+                  <span className="text-gray-500 italic">
+                    Tiada maklumat tambahan / No additional information
                   </span>
                 )}
               </div>

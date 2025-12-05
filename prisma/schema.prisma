@@ -52,13 +52,13 @@ model Booth {
 model Visitor {
   id          String   @id @default(cuid())
   name        String
-  phone       String   @unique // Phone number for identification
-  email       String?  // Optional email
-  state       String   // Negeri / State
-  gender      String   // Lelaki, Perempuan
-  age         Int
-  visitorType String   // Awam, Kakitangan Kerajaan, etc.
-  sektor      String   // pertanian, penternakan, etc.
+  email       String   @unique // Email for identification (required)
+  gender      String   // Lelaki, Perempuan (required)
+  phone       String?  // Optional phone number
+  state       String?  // Optional Negeri / State
+  age         Int?     // Optional age
+  visitorType String?  // Optional - Awam, Kakitangan Kerajaan, etc.
+  sektor      String?  // Optional - pertanian, penternakan, etc.
   cookieId    String   @unique // For cookie identification
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

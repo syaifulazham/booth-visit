@@ -13,9 +13,9 @@ export async function POST(request: NextRequest) {
     // Validate input
     const validatedData = visitorSchema.parse(body)
     
-    // Check if visitor with this phone already exists
+    // Check if visitor with this email already exists
     const existingVisitor = await prisma.visitor.findUnique({
-      where: { phone: validatedData.phone },
+      where: { email: validatedData.email },
     })
 
     let visitor
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
         visitor: {
           id: visitor.id,
           name: visitor.name,
-          phone: visitor.phone,
+          email: visitor.email,
           cookieId: visitor.cookieId,
         }
       },

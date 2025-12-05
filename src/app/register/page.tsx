@@ -84,21 +84,21 @@ function RegisterForm() {
     if (!formData.name.trim()) {
       newErrors.name = 'Nama penuh diperlukan / Full name is required'
     }
-    if (!formData.state) {
-      newErrors.state = 'Sila pilih negeri / Please select state'
+    if (!formData.email.trim()) {
+      newErrors.email = 'Emel diperlukan / Email is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Emel tidak sah / Invalid email format'
     }
     if (!formData.gender) {
       newErrors.gender = 'Sila pilih jantina / Please select gender'
     }
-    const age = parseInt(formData.age)
-    if (!formData.age || isNaN(age) || age < 1 || age > 120) {
-      newErrors.age = 'Umur tidak sah (1-120) / Invalid age (1-120)'
-    }
-    if (!formData.visitorType) {
-      newErrors.visitorType = 'Sila pilih jenis pelawat / Please select visitor type'
-    }
-    if (!formData.sektor) {
-      newErrors.sektor = 'Sila pilih sektor / Please select sector'
+
+    // Optional field validations
+    if (formData.age) {
+      const age = parseInt(formData.age)
+      if (isNaN(age) || age < 1 || age > 120) {
+        newErrors.age = 'Umur tidak sah (1-120) / Invalid age (1-120)'
+      }
     }
 
     setErrors(newErrors)
@@ -121,11 +121,15 @@ function RegisterForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
-          age: parseInt(formData.age),
-          // Extract the English part for database (before the /)
-          visitorType: formData.visitorType.split(' / ')[0],
-          sektor: formData.sektor.split(' / ')[0],
+          name: formData.name,
+          email: formData.email,
+          gender: formData.gender,
+          // Optional fields - only include if provided
+          phone: formData.phone || undefined,
+          state: formData.state || undefined,
+          age: formData.age ? parseInt(formData.age) : undefined,
+          visitorType: formData.visitorType ? formData.visitorType.split(' / ')[0] : undefined,
+          sektor: formData.sektor ? formData.sektor.split(' / ')[0] : undefined,
         }),
       })
 
@@ -163,6 +167,18 @@ function RegisterForm() {
             </p>
           </CardHeader>
           <CardContent>
+            {/* Info Message */}
+            <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r">
+              <p className="text-sm text-blue-800">
+                <span className="font-semibold">ℹ️ Quick Registration:</span> Only 3 fields needed! 
+                Additional details (phone, state, age, etc.) can be added later in your profile.
+              </p>
+              <p className="text-xs text-blue-700 mt-1">
+                Pendaftaran Pantas: Hanya 3 medan diperlukan! 
+                Maklumat tambahan (telefon, negeri, umur, dll.) boleh ditambah kemudian di profil anda.
+              </p>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name */}
               <div className="space-y-2">
@@ -177,32 +193,15 @@ function RegisterForm() {
                   onChange={handleChange}
                   disabled={loading}
                   className={errors.name ? 'border-red-500' : ''}
+                  placeholder="Ahmad Ibrahim"
                 />
                 {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
-              </div>
-
-              {/* Phone */}
-              <div className="space-y-2">
-                <Label htmlFor="phone">
-                  No. Telefon / Phone Number <span className="text-red-500">*</span>
-                </Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  disabled={loading}
-                  className={errors.phone ? 'border-red-500' : ''}
-                  placeholder="01X-XXXXXXX"
-                />
-                {errors.phone && <p className="text-sm text-red-600">{errors.phone}</p>}
               </div>
 
               {/* Email */}
               <div className="space-y-2">
                 <Label htmlFor="email">
-                  Emel / Email (Optional)
+                  Emel / Email <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="email"
@@ -217,133 +216,46 @@ function RegisterForm() {
                 {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
               </div>
 
-              {/* State */}
-              <div className="space-y-2">
-                <Label htmlFor="state">
-                  Negeri / State <span className="text-red-500">*</span>
-                </Label>
-                <select
-                  id="state"
-                  name="state"
-                  value={formData.state}
-                  onChange={handleChange}
-                  disabled={loading}
-                  className={`flex h-10 w-full rounded-md border ${
-                    errors.state ? 'border-red-500' : 'border-input'
-                  } bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
-                >
-                  <option value="">Sila Pilih / Please Select</option>
-                  {states.map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-                {errors.state && <p className="text-sm text-red-600">{errors.state}</p>}
-              </div>
-
               {/* Gender */}
               <div className="space-y-2">
                 <Label>
                   Jantina / Gender <span className="text-red-500">*</span>
                 </Label>
-                <div className="flex gap-6">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Lelaki"
-                      checked={formData.gender === 'Lelaki'}
-                      onChange={handleChange}
-                      disabled={loading}
-                      className="w-4 h-4"
-                    />
-                    <span>Lelaki / Male</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Perempuan"
-                      checked={formData.gender === 'Perempuan'}
-                      onChange={handleChange}
-                      disabled={loading}
-                      className="w-4 h-4"
-                    />
-                    <span>Perempuan / Female</span>
-                  </label>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({ ...formData, gender: 'Lelaki' })
+                      if (errors.gender) setErrors({ ...errors, gender: '' })
+                    }}
+                    disabled={loading}
+                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+                      formData.gender === 'Lelaki'
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                  >
+                    <span className="text-xl pointer-events-none">👨</span>
+                    <span className="pointer-events-none">Lelaki / Male</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({ ...formData, gender: 'Perempuan' })
+                      if (errors.gender) setErrors({ ...errors, gender: '' })
+                    }}
+                    disabled={loading}
+                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+                      formData.gender === 'Perempuan'
+                        ? 'bg-pink-600 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                  >
+                    <span className="text-xl pointer-events-none">👩</span>
+                    <span className="pointer-events-none">Perempuan / Female</span>
+                  </button>
                 </div>
                 {errors.gender && <p className="text-sm text-red-600">{errors.gender}</p>}
-              </div>
-
-              {/* Age */}
-              <div className="space-y-2">
-                <Label htmlFor="age">
-                  Umur / Age <span className="text-red-500">*</span>
-                </Label>
-                <Input
-                  id="age"
-                  name="age"
-                  type="number"
-                  min="1"
-                  max="120"
-                  value={formData.age}
-                  onChange={handleChange}
-                  disabled={loading}
-                  className={errors.age ? 'border-red-500' : ''}
-                  placeholder="tahun / years old"
-                />
-                {errors.age && <p className="text-sm text-red-600">{errors.age}</p>}
-              </div>
-
-              {/* Visitor Type */}
-              <div className="space-y-2">
-                <Label htmlFor="visitorType">
-                  Jenis Pelawat / Visitor Type <span className="text-red-500">*</span>
-                </Label>
-                <select
-                  id="visitorType"
-                  name="visitorType"
-                  value={formData.visitorType}
-                  onChange={handleChange}
-                  disabled={loading}
-                  className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                    errors.visitorType ? 'border-red-500' : ''
-                  }`}
-                >
-                  <option value="">Sila Pilih / Please Select</option>
-                  {visitorTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-                {errors.visitorType && <p className="text-sm text-red-600">{errors.visitorType}</p>}
-              </div>
-
-              {/* Sector */}
-              <div className="space-y-2">
-                <Label htmlFor="sektor">
-                  Sektor / Sector <span className="text-red-500">*</span>
-                </Label>
-                <select
-                  id="sektor"
-                  name="sektor"
-                  value={formData.sektor}
-                  onChange={handleChange}
-                  disabled={loading}
-                  className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                    errors.sektor ? 'border-red-500' : ''
-                  }`}
-                >
-                  <option value="">Sila Pilih / Please Select</option>
-                  {sektors.map((sektor) => (
-                    <option key={sektor} value={sektor}>
-                      {sektor}
-                    </option>
-                  ))}
-                </select>
-                {errors.sektor && <p className="text-sm text-red-600">{errors.sektor}</p>}
               </div>
 
               {/* Form Error */}
